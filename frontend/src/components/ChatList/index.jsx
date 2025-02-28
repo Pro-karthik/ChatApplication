@@ -1,12 +1,14 @@
-import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef,useContext } from "react";
 import { FiSearch } from "react-icons/fi";
 import { HiRefresh } from "react-icons/hi";
 
-import Cookies from "js-cookie";
 import { BounceLoader } from "react-spinners";
 import ChatListItem from "../ChatListItem";
-import ChatView from "../ChatView";
+
+import { ChatContext } from "../../context/chatContext";
+
 import "./index.css";
+
 
 const apiStatusConstants = {
   initial: "INITIAL",
@@ -16,71 +18,11 @@ const apiStatusConstants = {
 };
 
 const ChatList = () => {
-  const [chatList, setChatList] = useState([]);
-  const [searchText, setSearchText] = useState("");
-  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
-  const [chatSelected, setChatSelected] = useState("");
-
-  const prevChatList = useRef([]);  
-
-  const chatSelectedHandler = useCallback((chatId) => {
-    console.log(chatId);
-    setChatSelected(chatId);
-  }, []);
-
-  const fetchChatList = useCallback(async () => {
-    setApiStatus(apiStatusConstants.inProgress);
-    const jwtToken = Cookies.get("jwt_token");
-
-    if (!jwtToken) {
-      setApiStatus(apiStatusConstants.failure);
-      return;
-    }
-
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    };
-
-    try {
-      const response = await fetch("http://localhost:5000/api/user/getFriends", options);
-      const data = await response.json();
-      console.log(data)
-
-      if (response.ok) {
-        if (JSON.stringify(prevChatList.current) !== JSON.stringify(data.friends)) {
-          setChatList(data.friends);
-          prevChatList.current = data.friends;
-        }
-        setApiStatus(apiStatusConstants.success);
-      } else {
-        setApiStatus(apiStatusConstants.failure);
-      }
-    } catch (err) {
-      setApiStatus(apiStatusConstants.failure);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchChatList();
-  }, [fetchChatList]);
-
-  const filteredChatList = useMemo(() => {
-    return searchText
-      ? chatList.filter((chat) =>
-          chat.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-      : chatList;
-  }, [searchText, chatList]);
-
+  const { searchText, setSearchText, fetchChatList, filteredChatList, apiStatus, chatSelected, chatSelectedHandler } = useContext(ChatContext);
+  
   const SearchControl = (event) => {
     setSearchText(event.target.value);
   };
-
-  
 
   const SuccessView = () => {
     if (filteredChatList.length === 0) {
@@ -94,8 +36,6 @@ const ChatList = () => {
         </div>
       );
     }
-
-    console.log(filteredChatList);
 
     return (
       <ul className="chatlist-container">

@@ -2,9 +2,8 @@ import {Link} from 'react-router-dom'
 
 import './index.css'
 
-const ChatListItem = ({ chat,chatSelectedHandler }) => {
-  const { _id, name,phone} = chat
-  let activeClass = ''
+const ChatListItem = ({chat}) => {
+  const { _id, name} = chat
 
   return (
     <li className={`chatlist-item ${activeClass}`}>
