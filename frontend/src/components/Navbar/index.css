@@ -1,0 +1,164 @@
+*{
+  box-sizing:border-box;
+  padding:0;
+  margin:0;
+}
+
+.navbar{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  width:100%;
+}
+
+.logo-cont{
+  margin-top:10px;
+ margin-bottom:auto;
+}
+
+.logo{
+  color:#ffffff;
+  font-size:50px;
+}
+
+.nav-links{
+  margin-bottom:auto;
+  list-style:none;
+  width:100%;
+  padding:0;
+}
+.nav-links li{
+  margin:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  margin-left:0;
+  height:50px;
+  margin-bottom:25px;
+}
+
+.active-nav{
+  border-left:3px solid #ffffff;
+}
+
+.nav-links .icons{
+  color:#ffffff;
+  font-size:25px;
+}
+
+.nav-links button{
+  background-color:transparent;
+  border:none;
+  outline:none;
+  cursor:pointer;
+}
+
+.notification-count{
+  color:#ffffff;
+  background-color:#80FCE9;
+  border-radius:50%;
+  padding:3px;
+  display:flex;
+  justify-content:center; 
+  align-items:center;
+  font-weight:bold;
+  height:20px;
+  width:20px;
+  margin-left:5px;
+  font-size:8px;
+}
+
+.small-nav-links{
+  display:none;
+}
+
+
+@media all and (max-width:768px){
+  .logo-cont{
+    margin:0;
+    padding-left:10px;
+  }
+
+  .logo{
+    color:#ffffff;
+    font-size:70px;
+  }
+
+  .navbar{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    min-height:10vh;
+    width:100%;
+  }
+  .nav-links{
+    display:none;
+  }
+  .small-nav-links{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    list-style:none;
+    gap:29px;
+  }
+  .small-nav-links .icons{
+    color:#ffffff;
+    font-size:25px;
+  }
+  .small-nav-links-list-items{
+    margin:10px;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    margin-left:0;
+    height:50px;
+    margin-bottom:25px;
+    width:100%;
+  }
+  .active-nav{
+    border-left:0;
+    border-bottom:3px solid #ffffff;
+    display:flex;
+  }
+  .small-nav-links button{
+    background-color:transparent;
+    border:none;
+    outline:none;
+    cursor:pointer;
+  }
+  
+  .notification-count{
+    color:#ffffff;
+    background-color:#80FCE9;
+    border-radius:50%;
+    padding:3px;
+    display:flex;
+    justify-content:center; 
+    align-items:center;
+    font-weight:bold;
+    height:20px;
+    width:20px;
+    margin-left:5px;
+    font-size:8px;
+  }
+ 
+}
+
+.nav-links,.small-nav-links li{
+  position:relative;
+  
+}
+
+.special-not-icon{
+  color:#ffffff;   
+  text-decoration:none;
+}
+
+
+   

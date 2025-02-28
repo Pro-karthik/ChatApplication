@@ -1,0 +1,73 @@
+.add-friends-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.add-frnd-img{
+    width: 100%;
+   
+}
+
+
+.add-frnd-form-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.add-friends-form{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start ;
+
+}
+
+
+.add-friends-form input{
+    width: 350px;
+    padding: 8px;
+    margin: 6px 0 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.add-friends-form button{
+    width: 350px;
+    padding: 8px;
+    margin: 6px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.add-friends-form button:hover{
+    background-color: #0056b3;
+}
+
+.add-friends-form label{
+    font-size: 20px;
+    font-weight: bold;
+   
+}
+
+.actual-msg{
+    color:'green';
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media all and (min-width:768px){
+  .add-frnd-img{
+    width: 50%;
+  }
+}
