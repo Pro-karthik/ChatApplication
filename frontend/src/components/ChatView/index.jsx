@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext} from "react";
 import { FiSend } from "react-icons/fi";
+import  ChatContext  from "../../context/ChatContext.jsx";
 import socket from "../../socket"; 
+import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 import ChatList  from "../ChatList";
 
 import "./index.css";
@@ -16,44 +19,55 @@ const Message = ({ message }) => {
   );
 };
 
-const ChatView = ({receiverPhone }) => {
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
-
-  console.log(receiverPhone)
+const ChatView = () => {
+  const [name,setName] = useState('')
+  const [messages,setMessages] = useState([])
+  const [message,setMessage] = useState('')
+  const [conversationId,setConversationId] = useState('')
+  const { fetchChatList,chatList} = useContext(ChatContext);
+  const {chatId} = useParams();
 
   useEffect(() => {
-    socket.on("message", (newMessage) => {
-      if (newMessage.senderPhone === receiverPhone) {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { type: "received", text: newMessage.message },
-        ]);
+    fetchChatList()
+  },[])
+  
+  useEffect(() => {
+    const fetchConversation = async () => {
+       if(chatList.length === 0) return
+       const lol = chatList.find((chat) => chat._id === chatId);
+      setName(lol.name)
+      const receiverPhone = lol.phone
+      const jwtToken = Cookies.get("jwt_token");
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+          "Authorization" : `Bearer ${jwtToken}` 
+        },
+        body : JSON.stringify({receiverPhone})
       }
-    });
-
-    return () => {
-      socket.off("message"); 
-    };
-  }, [receiverPhone]);
-
+      const response = await fetch('http://localhost:5000/api/user/conversation',options)
+      if(response.ok){
+        const data = await response.json();
+        const convId = data._id
+        setConversationId(convId)
+      }
+      else{
+        console.log("Error")
+      }
+    }
+    fetchConversation()
+  },[chatId,chatList])
+ 
   const msgClickHandler = () => {
-    if (message.trim() === "") return;
-
-    
+    if (message.trim() === "") return;  
     setMessages([...messages, { type: "sent", text: message }]);
-
-   
-    socket.emit("message", { receiverPhone, message });
-
     setMessage("");
   };
-
   return (
     <>
     <div className="chatview-chatlist">
        <ChatList />
-       
     </div>
     
     <div className="chatview-container-page">
@@ -65,7 +79,7 @@ const ChatView = ({receiverPhone }) => {
             className="profile-img"
           />
           <div>
-            <h1 className="profile-name">John Doe</h1>
+            <h1 className="profile-name">{name}</h1>
             <p className="profile-status">online</p>
           </div>
         </div>

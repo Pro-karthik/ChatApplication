@@ -8,12 +8,12 @@ const userConversationController = async (req,res) => {
     let conversation = await Conversation.findOne({
       participants : {$all : [senderPhone,receiverPhone]}
     })
-  
-    if(!conversation){
+    console.log(conversation)
+    if(conversation === null){
       conversation = new Conversation({
         participants : [senderPhone,receiverPhone]
       })
-      await newConversation.save()
+      await conversation.save()
     }
     res.status(200).json({ success: true, conversation });
   }

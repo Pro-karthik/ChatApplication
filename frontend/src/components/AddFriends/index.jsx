@@ -1,5 +1,7 @@
-import {useState} from 'react'
+import {useState,useContext} from 'react'
 import Cookies from 'js-cookie'
+
+import ChatContext from '../../context/ChatContext';
 
 import './index.css';
 
@@ -7,6 +9,7 @@ const AddFriends =  () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [error, setError] = useState('');
+  const {fetchChatList} = useContext(ChatContext);
  
   const HandleSubmit = async (event) => {
     event.preventDefault();
@@ -33,6 +36,7 @@ const AddFriends =  () => {
             setNumber('')
             setError('')
             setError(data.message)
+            fetchChatList()
           }
           else{
             setError(data.message)

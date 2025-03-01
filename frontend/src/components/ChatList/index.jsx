@@ -1,11 +1,13 @@
-import { useEffect, useState, useCallback, useMemo, useRef,useContext } from "react";
+import { useContext } from "react";
 import { FiSearch } from "react-icons/fi";
 import { HiRefresh } from "react-icons/hi";
 
 import { BounceLoader } from "react-spinners";
 import ChatListItem from "../ChatListItem";
 
-import { ChatContext } from "../../context/chatContext";
+import ChatContext from "../../context/ChatContext";
+
+
 
 import "./index.css";
 
@@ -18,8 +20,7 @@ const apiStatusConstants = {
 };
 
 const ChatList = () => {
-  const { searchText, setSearchText, fetchChatList, filteredChatList, apiStatus, chatSelected, chatSelectedHandler } = useContext(ChatContext);
-  
+  const { searchText, setSearchText, fetchChatList, filteredChatList, apiStatus} = useContext(ChatContext);
   const SearchControl = (event) => {
     setSearchText(event.target.value);
   };
@@ -40,7 +41,7 @@ const ChatList = () => {
     return (
       <ul className="chatlist-container">
         {filteredChatList.map((chat) => (
-          <ChatListItem key={chat._id} chat={chat} chatSelectedHandler={chatSelectedHandler} />
+          <ChatListItem key={chat._id} chat={chat} />
         ))}
       </ul>
     );
@@ -73,7 +74,7 @@ const ChatList = () => {
 
   return (
     <div className="chatlist-main-container">
-      <div className={`chatlist ${chatSelected ? "dnone" : "dblock"}`}>
+      <div className={`chatlist`}>
         <div className="chatlist-header">
           <div className="chatlist-title-cont">
             <h1>Chat</h1>

@@ -1,7 +1,7 @@
 import {useState,createContext,useEffect,useCallback,useMemo,useRef} from 'react'; 
 import Cookies from "js-cookie"; 
-
-export const ChatContext = createContext();
+ 
+const ChatContext = createContext();
 
 const apiStatusConstants = {
   initial: "INITIAL",
@@ -18,12 +18,16 @@ export const ChatProvider = ({children}) => {
    const prevChatList = useRef([])
 
    const fetchChatList = useCallback(async () => {
+    
       setApiStatus(apiStatusConstants.inProgress)
+
       const jwtToken = Cookies.get("jwt_token")
+      
       if(!jwtToken){
-         setApiStatus(apiStatusConstants.failure)
-         return
+        setApiStatus(apiStatusConstants.failure)
+        return
       }
+      
       const options = {
         method : "GET",
         headers : {
@@ -43,10 +47,10 @@ export const ChatProvider = ({children}) => {
       else{
         setApiStatus(apiStatusConstants.failure)  
       }
-   })
+   },[])
 
    useEffect(() => {
-      fetchChatList()
+    fetchChatList()
    },[fetchChatList])
 
    const filteredChatList = useMemo(() => {
@@ -59,4 +63,7 @@ export const ChatProvider = ({children}) => {
    </ChatContext.Provider>
 
 }
+
+export default ChatContext
+
 
