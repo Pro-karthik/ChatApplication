@@ -9,7 +9,7 @@ import ChatView from "./components/ChatView/index.jsx";
 import Navbar from "./components/Navbar/index.jsx";
 import AddFriends from "./components/AddFriends/index.jsx";
 import SettingsPage from "./components/SettingsPage/index.jsx";
-import { ChatProvider } from "./context/ChatContext";
+
 
 import "./App.css";
 
@@ -30,71 +30,40 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/not-found" element={<NotFound />} />
 
-        <Route
-          path="/*"
-          element={
-            <ChatProvider>
-              <div className="main-cont">
-                <ProtectedRoute>
-                  <ChatContainer />
-                </ProtectedRoute>
-              </div>
-            </ChatProvider>
-          }
-        />
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path="/*"
+            element={
+              <ChatContainer />
+            }
+          />
 
-        <Route
-          path="/chat/:chatId"
-          element={
-            <ChatProvider>
-              <div className="main-cont">
-                <ProtectedRoute>
-                  <ChatView />
-                </ProtectedRoute>
-              </div>
-            </ChatProvider>
-          }
-        />
+          <Route
+            path="/chat/:chatId"
+            element={
+              <ChatView />
+            }
+          />
 
-        <Route
-          path="/add-friends"
-          element={
-            <ChatProvider>
-              <div className="main-cont">
-                <ProtectedRoute>
-                  <AddFriends />
-                </ProtectedRoute>
-              </div>
-            </ChatProvider>
-          }
-        />
+          <Route
+            path="/add-friends"
+            element={
+              <AddFriends />
+            }
+          />
 
-        <Route
-          path="/notifications"
-          element={
-            <ChatProvider>
-              <div className="main-cont">
-                <ProtectedRoute>
-                  <p>Notifications</p>
-                </ProtectedRoute>
-              </div>
-            </ChatProvider>
-          }
-        />
+          <Route
+            path="/notifications"
+            element={
+              <p>Notifications</p>}/>
 
-        <Route
-          path="/settings"
-          element={
-            <ChatProvider>
-              <div className="main-cont">
-                <ProtectedRoute>
-                  <SettingsPage />
-                </ProtectedRoute>
-              </div>
-            </ChatProvider>
-          }
-        />
-
+          <Route
+            path="/settings"
+            element={
+              <SettingsPage />
+            }
+          />
+        </Route>
         <Route path="*" element={<Navigate to="/not-found" />} />
       </Routes>
     </div>

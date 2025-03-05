@@ -1,26 +1,32 @@
-const Conversation = require('../models/Conversation')
+const Conversation = require('../models/Conversation');
 
-const userConversationController = async (req,res) => {
-  const details = req.body
-  const receiverPhone = details.receiverPhone
-  const senderPhone = req.user.phone
-  try{
+const userConversationController = async (req, res) => {
+  const { receiverPhone } = req.body;
+  const senderPhone = req.user.phone; // Extracted from JWT
+
+  try {
+    const sortedParticipants = [senderPhone, receiverPhone].sort();
     let conversation = await Conversation.findOne({
-      participants : {$all : [senderPhone,receiverPhone]}
-    })
-    console.log(conversation)
-    if(conversation === null){
+      participants: sortedParticipants
+    });
+    if (!conversation) {
       conversation = new Conversation({
-        participants : [senderPhone,receiverPhone]
-      })
-      await conversation.save()
+        participants: sortedParticipants
+      });
+      await conversation.save();
     }
-    res.status(200).json({ success: true, conversation });
-  }
-  catch(err){
-    res.status(500).json({ success: false, message: err.message });
-  }
 
-}
+    return res.status(200).json({ 
+      success: true, 
+      conversationId: conversation._id 
+    });
 
-module.exports = userConversationController
+  } catch (err) {
+    return res.status(500).json({ 
+      success: false, 
+      message: err.message 
+    });
+  }
+};
+
+module.exports = userConversationController;

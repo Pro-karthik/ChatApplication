@@ -8,14 +8,16 @@
 
 .main-setting-cont{
   width:100%;
-  text-align:center;
+
+}
+
+.setting-head{
+  color:black;
+  font-size:2.5rem;
 }
 
 .profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  
  width: 100%;
 }
 
@@ -56,4 +58,23 @@
   justify-content:center;
   align-items:center;
   min-height:40vh;
+}
+
+.retry-container{
+  height:200px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.retry-container button{
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:5px;
+  outline:none;
+  border-color:rgba(0, 174, 255, 0.5);
+  color:rgba(0, 174, 255, 0.5);
+  background-color:transparent;
+  width:100px;
+  cursor:pointer;
 }
